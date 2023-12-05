@@ -52,7 +52,7 @@ Here is an example client usage of the utilities:
 
 ```csharp
     // creating a new client object
-    MS_Graph_Deamon_Client msGraph = new MS_Graph_Deamon_Client(clientId, "msgraph_app_creds", tenantGuid);
+    MS_Graph_Daemon_Client msGraph = new MS_Graph_Deamon_Client(clientId, "msgraph_app_creds", tenantGuid);
 
     // Example GET:
     // this creates url: https://graph.microsoft.com/v1.0/sites/{siteid}/lists/{listid}/items?$expand=fields($select=id,EMail)&?$select=id
