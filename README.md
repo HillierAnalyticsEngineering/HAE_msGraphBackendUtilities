@@ -7,34 +7,34 @@ For connecting to sharepoint using the client credentials flow, we highly reccom
 
 Here are example MS Graph and PnP Powershell cmdlets that can be used to add red, write sp roles for your app registration.
 
-                    1. HTTP POST to MS Graph (With proper permissions):
-                    https://devblogs.microsoft.com/microsoft365dev/controlling-app-access-on-specific-sharepoint-site-collections/
-                    
-                    ------------------------------------
-
-                    POST https://graph.microsoft.com/v1.0/sites/{site_id}/permissions
-
-                    Content-Type: application/json
-
-                    {
-
-                      "roles": ["read","write"],
-
-                      "grantedToIdentities": [{
-
-                        "application": {
-
-                          "id": "Application (Client) ID From App Registration",
-
-                          "displayName": "Foo App"
-
-                        }
-
-                      }]
-
-                    }
-
-                    ------------------------------------
-
-                    2. PowerShell Cmdlet:
-                    https://pnp.github.io/powershell/cmdlets/Grant-PnPAzureADAppSitePermission.html
+    1. HTTP POST to MS Graph (With proper permissions):
+    https://devblogs.microsoft.com/microsoft365dev/controlling-app-access-on-specific-sharepoint-site-collections/
+    
+    ------------------------------------
+  
+    POST https://graph.microsoft.com/v1.0/sites/{site_id}/permissions
+  
+    Content-Type: application/json
+  
+    {
+  
+      "roles": ["read","write"],
+  
+      "grantedToIdentities": [{
+  
+        "application": {
+  
+          "id": "Application (Client) ID From App Registration",
+  
+          "displayName": "Foo App"
+  
+        }
+  
+      }]
+  
+    }
+  
+    ------------------------------------
+  
+    2. PowerShell Cmdlet:
+    https://pnp.github.io/powershell/cmdlets/Grant-PnPAzureADAppSitePermission.html
