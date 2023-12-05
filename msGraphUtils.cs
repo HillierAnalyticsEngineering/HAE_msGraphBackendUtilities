@@ -51,7 +51,7 @@ public class oAuthResponse
 /// <summary>
 /// Provides custom HTTP Client methods for interacting with Microsoft Graph API using client credentials OAuth 2.0 flow
 /// </summary>
-public class MS_Graph_Deamon_Client{
+public class MS_Graph_Daemon_Client{
 
     private string az_app_clientsecret;
     private string clientid;
