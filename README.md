@@ -1,7 +1,7 @@
 # HAE_msGraphBackendUtilities
 Back-end utility functions and model classes for working with Sharepoint Lists through the Microsoft Graph API.
 
-All functions require a client-credentials configuration for use. This will require an app registration in Azure Entre ID. Utilities authenticate using an app ID, client credentials password, and an oAuthToken with some attached scope. Generally, apps developed using these functions are intended to be Background/Deamon processes, and will require Application-level API permissions as opposed to delegated.
+All functions require a client-credentials configuration for use. This will require an app registration in Azure Entre ID. Utilities authenticate using an app ID, client credentials password, and an OAuth 2.0 Token with some attached scope. Generally, apps developed using these functions are intended to be Background/Deamon processes, and will require Application-level API permissions as opposed to delegated.
 
 For connecting to sharepoint using the client credentials flow, we highly reccomend the Sites.Selected Application-Level scope, and to add in read, write roles for just an individual sharepoint site when working with lists in order to provide the highest level of security possible.
 
