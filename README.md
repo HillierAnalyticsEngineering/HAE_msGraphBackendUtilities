@@ -11,11 +11,11 @@ For connecting to sharepoint using the client credentials flow, we highly reccom
 
 Here are example MS Graph and PnP Powershell cmdlets that can be used to add read, write sp roles for your app registration.
 
-    1. HTTP POST to MS Graph (With proper permissions):
-    https://devblogs.microsoft.com/microsoft365dev/controlling-app-access-on-specific-sharepoint-site-collections/
-    
-    ------------------------------------
-  
+1. HTTP POST to MS Graph (With proper permissions):
+https://devblogs.microsoft.com/microsoft365dev/controlling-app-access-on-specific-sharepoint-site-collections/
+
+------------------------------------
+```HTTP
     POST https://graph.microsoft.com/v1.0/sites/{site_id}/permissions
   
     Content-Type: application/json
@@ -37,27 +37,33 @@ Here are example MS Graph and PnP Powershell cmdlets that can be used to add rea
       }]
   
     }
-  
-    ------------------------------------
-  
-    2. PowerShell Cmdlet:
-    https://pnp.github.io/powershell/cmdlets/Grant-PnPAzureADAppSitePermission.html
+```
+
+------------------------------------
+
+2. PowerShell Cmdlet:
+https://pnp.github.io/powershell/cmdlets/Grant-PnPAzureADAppSitePermission.html
+
+
+
+------------------------------------
 
 Here is an example client usage of the utilities:
 
+```csharp
     // creating a new client object
     MS_Graph_Deamon_Client msGraph = new MS_Graph_Deamon_Client(clientId, "msgraph_app_creds", tenantGuid);
 
     // Example GET:
     // this creates url: https://graph.microsoft.com/v1.0/sites/{siteid}/lists/{listid}/items?$expand=fields($select=id,EMail)&?$select=id
     // '50' sets max pages to grab to 50
-    var getItemsResult = await GetSpListItems_MsGraph_V1(sp_siteid, sp_listid, oAuthToken, new List<string>(){ "id", "EMail", }, new List<string>(){ "id" }, 50);
+    var getItemsResult = await msGraph.GetSpListItems_MsGraph_V1(sp_siteid, sp_listid, oAuthToken, new List<string>(){ "id", "EMail", }, new List<string>(){ "id" }, 50);
     string getItemsJSON = (string)getItemsResult.Value;
     // deserialize JSON into your BYO model class
     List<UpdateItemMetaData> updateItems = JsonConvert.DeserializeObject<List<UpdateItemMetaData>>(getItemsJSON);
 
     // Example GET for user lookup ids in a site:
-    var userListIdsResult = await GetSpListItems_MsGraph_V1(sp_siteid, sp_user, oAuthToken, new List<string>() { "id", "EMail", }, new List<string>() { "id" }, 10);
+    var userListIdsResult = await msGraph.GetSpListItems_MsGraph_V1(sp_siteid, sp_user, oAuthToken, new List<string>() { "id", "EMail", }, new List<string>() { "id" }, 10);
     string userListIdsJSON = (string)userListIdsResult.Value;
     // deserialize JSON into provided UserLookupMetaData model class
     List<UserLookupMetaData> userIdItems = JsonConvert.DeserializeObject<List<UserLookupMetaData>>(userListIdsJSON);
@@ -79,7 +85,7 @@ Here is an example client usage of the utilities:
     }
 
     // Example PATCH:
-    var patchItemsResult = await PatchToSpList_MsGraph_V1(new Dictionary<string, string>(){ {"311", "{updateJson}"}, {"312", "{updateJson}"} }, sp_siteid, sp_listid, oAuthToken);
+    var patchItemsResult = await msGraph.PatchToSpList_MsGraph_V1(new Dictionary<string, string>(){ {"311", "{updateJson}"}, {"312", "{updateJson}"} }, sp_siteid, sp_listid, oAuthToken);
     if (patchItemsResult.DeclaredType != typeof(string))
     {
         // If the assigned work result is not of the expected type, return a BadRequest response with the result.
@@ -87,10 +93,10 @@ Here is an example client usage of the utilities:
     }
 
     // Example POST:
-    var postToSPResult = await PostToSpList_MsGraph_V1(new List<SharePointNewListItemModel>(){ new SharePointNewListItemModel() }, sp_siteid, sp_listid, oAuthToken);
+    var postToSPResult = await msGraph.PostToSpList_MsGraph_V1(new List<SharePointNewListItemModel>(){ new SharePointNewListItemModel() }, sp_siteid, sp_listid, oAuthToken);
     if (postToSPResult.DeclaredType != typeof(string))
     {
         // If the assigned work result is not of the expected type, return a BadRequest response with the result.
         return new BadRequestObjectResult($"POST Request: {postToSPResult.Value}");
     }
-    
+```
