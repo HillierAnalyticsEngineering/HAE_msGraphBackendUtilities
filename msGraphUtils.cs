@@ -53,14 +53,25 @@ public class oAuthResponse
 /// </summary>
 public class MS_Graph_Deamon_Client{
 
-    public MS_Graph_Deamon_Client() { };
+    private string az_app_clientsecret;
+    private string clientid;
+    private string clientsecret;
+    private string tenantguid;
+
+    // Parameterized constructor for creating an object tied to a specific Azure app registration.
+    public MS_Graph_Deamon_Client(string clientid, string clientsecret, string tenantguid)
+    {
+        this.clientid = clientid;
+        this.clientsecret = clientsecret;
+        this.tenantguid = tenantguid;
+    };
 
     /// <summary>
     /// Sets the client secret variable to the app registration client secret stored in an Azure Key Vault.
     /// </summary>
     /// <param name="az_app_clientsecret">Reference to the Azure app client secret.</param>
     /// <param name="secretName">Name of the secret in Azure Key Vault.</param>
-    static void Get_az_KV_Secret(ref string az_app_clientsecret, string secretName)
+    static void Load_az_KV_Secret(string secretName)
     {
         // -----------------------------------------------------------------------------------------------------------------------------------------------------
         // Method - Get_az_KV_Secret
@@ -92,7 +103,7 @@ public class MS_Graph_Deamon_Client{
     /// <param name="tenantguid">The Azure AD tenant's GUID.</param>
     /// <param name="scope">The requested scope for the access token.</param>
     /// <returns>An ObjectResult containing the OAuth access token if successful.</returns>
-    public async Task<ObjectResult> GetOauthAccessToken(string clientid, string clientsecret, string tenantguid, string scope)
+    public async Task<ObjectResult> GetOauthAccessToken(string scope)
     {
         // -----------------------------------------------------------------------------------------------------------------------------------------------------
         // Method - GetOauthAccessToken  
