@@ -55,15 +55,14 @@ public class MS_Graph_Deamon_Client{
 
     private string az_app_clientsecret;
     private string clientid;
-    private string clientsecret;
     private string tenantguid;
 
     // Parameterized constructor for creating an object tied to a specific Azure app registration.
-    public MS_Graph_Deamon_Client(string clientid, string clientsecret, string tenantguid)
+    public MS_Graph_Deamon_Client(string clientid, string secretName, string tenantguid)
     {
         this.clientid = clientid;
-        this.clientsecret = clientsecret;
         this.tenantguid = tenantguid;
+        Load_az_KV_Secret(secretName);
     };
 
     /// <summary>
@@ -74,7 +73,7 @@ public class MS_Graph_Deamon_Client{
     static void Load_az_KV_Secret(string secretName)
     {
         // -----------------------------------------------------------------------------------------------------------------------------------------------------
-        // Method - Get_az_KV_Secret
+        // Method - Load_az_KV_Secret
         // -----------------------------------------------------------------------------------------------------------------------------------------------------
         /*
 
@@ -221,13 +220,13 @@ public class MS_Graph_Deamon_Client{
 
         if (itemFields != null)
         {
-            fieldsExpandQuery += $"?expand=fields(select={string.Join(',', itemFields)})";
+            fieldsExpandQuery += $"?$expand=fields($select={string.Join(',', itemFields)})";
             fullUriString += fieldsExpandQuery;
         }
 
         if (responseSelectFields != null)
         {
-            fieldsSelectQuery += $"?select={string.Join(',', responseSelectFields)}";
+            fieldsSelectQuery += $"?$select={string.Join(',', responseSelectFields)}";
             if (fullUriString.Contains(fieldsExpandQuery)) { fullUriString += "&"; }
             fullUriString += fieldsSelectQuery;
         }
@@ -511,4 +510,3 @@ public class MS_Graph_Deamon_Client{
         }
     }
 }
-
